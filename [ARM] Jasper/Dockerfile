@@ -1,5 +1,5 @@
-FROM danielchalef/armhf-ubuntu-core:15.04
-MAINTAINER Daniel Chalef <daniel.chalef@gmail.com>
+FROM skulblaka/armhf-ubuntu-core:15.04
+MAINTAINER Gauthier Donikian <gauthier.donikian@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV JASPER_HOME /opt/jasper
@@ -22,11 +22,14 @@ RUN apt-get install -y \
 	subversion autoconf libtool automake gfortran \ 
 	python-pymad libttspico-utils
 
-RUN git clone https://github.com/jasperproject/jasper-client.git $JASPER_HOME
+RUN git clone https://github.com/skulblaka24/alfred-voice.git
+#RUN git clone https://github.com/jasperproject/jasper-client.git $JASPER_HOME
 
 # Build optimized OpenBLAS from source. Ensure we use armv7 target. 
 # Unfortunately OpenBLAS does not yet use the cortex-a5's neon-vfpv4 instructions
-RUN git clone https://github.com/xianyi/OpenBLAS.git $JASPER_HOME/OpenBLAS 
+
+RUN git clone https://github.com/skulblaka24/OpenBLAS.git $JASPER_HOME/OpenBLAS 
+#RUN git clone https://github.com/xianyi/OpenBLAS.git $JASPER_HOME/OpenBLAS 
 WORKDIR $JASPER_HOME/OpenBLAS
 RUN git checkout v0.2.14
 RUN make -j $THREADS TARGET=ARMV7 && make install
